@@ -1,0 +1,11 @@
+#!/bin/bash
+
+branchName=$1
+oldVersion=$2
+newVersion=$3
+newMajorMinor=$4
+
+if [ "$branchName" = "renovate/quarkus.platform.version" ]; then
+  echo "Branch: $branchName; Old version: $oldVersion; New MajorMinorVersion: $newMajorMinor"
+  ./mvnw quarkus:update -Dquarkus.platform.version=$oldVersion -Dstream=$newMajorMinor
+fi
