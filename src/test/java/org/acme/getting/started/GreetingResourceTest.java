@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-public class GreetingResourceTest {
+class GreetingResourceTest {
 
     @Test
-    public void testHelloEndpoint() {
+    void testHelloEndpoint() {
         given()
                 .when().get("/hello")
                 .then()
@@ -22,7 +22,7 @@ public class GreetingResourceTest {
     }
 
     @Test
-    public void testGreetingEndpoint() {
+    void testGreetingEndpoint() {
         String uuid = UUID.randomUUID().toString();
         given()
                 .pathParam("name", uuid)
@@ -31,5 +31,4 @@ public class GreetingResourceTest {
                 .statusCode(200)
                 .body(is("hello " + uuid));
     }
-
 }
