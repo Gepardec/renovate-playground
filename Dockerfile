@@ -1,0 +1,1 @@
+FROM ghcr.io/gattma/silly-producer:v0.3@sha256:7f2e3480359d06c9b8edaa7a0e5ec00134c1613c759cd9cdf577940039e5fb27
