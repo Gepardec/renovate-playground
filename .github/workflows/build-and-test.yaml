@@ -33,7 +33,7 @@ jobs:
   add-link:
     runs-on: ubuntu-latest
     needs: build-and-test
-    if: github.event_name == 'pull_request_target'
+    #if: github.event_name == 'pull_request_target'
     steps:
       - name: Add link to Pull Request
         uses: redhat-actions/try-in-web-ide@v1
