@@ -15,6 +15,7 @@ commands:
 events:
   postStart:
     - touch
+    - clean-install
 components:
   - name: tools
     container:
