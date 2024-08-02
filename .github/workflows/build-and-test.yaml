@@ -41,5 +41,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           add_comment: true
           web_ide_instance: https://this-is-ruhsis-test-url.com
-
+          comment_badge: https://www.gepardec.com/media/gepardec_logo_rgb_neg-1.svg
 
