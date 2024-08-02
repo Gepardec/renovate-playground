@@ -8,4 +8,9 @@ public class FailingTest {
     void testThisAlwaysFails() {
         assert false;
     }
+
+    @Test
+    void testThisAlwaysPasses() {
+        assert true;
+    }
 }
