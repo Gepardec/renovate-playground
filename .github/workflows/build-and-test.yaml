@@ -22,6 +22,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Echo github.ref
+        run: echo ${{ github.ref }}
+
       - name: Break Build for branch 'renovate/major-quarkus*'
         if: contains(github.ref, 'renovate/major-quarkus')
         run: mvn -B install '-Dtest=FailingTest' --file pom.xml
