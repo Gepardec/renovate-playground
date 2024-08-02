@@ -34,7 +34,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-test
     if: failure() &&
-      github.event_name == 'pull_request_target' && 
       contains(github.ref, 'renovate/major-quarkus')
     steps:
       - name: Add link to Pull Request
