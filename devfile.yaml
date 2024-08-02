@@ -7,9 +7,14 @@ commands:
       component: tools
       commandLine: './mvnw clean install'
       workingDir: ${PROJECT_SOURCE}
+  - id: touch
+    exec:
+      component: tools
+      commandLine: 'touch blubb'
+      workingDir: ${PROJECT_SOURCE}
 events:
   postStart:
-    - clean-install
+    - touch
 components:
   - name: tools
     container:
