@@ -5,7 +5,7 @@ commands:
   - id: clean-install
     exec:
       component: tools
-      commandLine: './mvnw -Dmaven.repo.local=/home/user/.m2/repository clean install'
+      commandLine: './mvnw clean install'
       workingDir: ${PROJECT_SOURCE}
 components:
   - name: tools
