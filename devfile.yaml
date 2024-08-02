@@ -7,6 +7,9 @@ commands:
       component: tools
       commandLine: './mvnw clean install'
       workingDir: ${PROJECT_SOURCE}
+events:
+  postStart:
+    - clean-install
 components:
   - name: tools
     container:
