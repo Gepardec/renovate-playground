@@ -20,7 +20,7 @@ jobs:
           cache: maven
 
       - name: Echo github.ref
-        run: echo ${{ github.base_ref }}
+        run: echo ${{ github.ref_name }}
 
       - name: Break Build for branch 'renovate/major-quarkus*'
         if: contains(github.ref, 'renovate/major-quarkus')
