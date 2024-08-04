@@ -22,6 +22,9 @@ jobs:
       - name: Echo github.ref
         run: echo ${{ github.ref_name }}
 
+      - name: Echo source branch
+        run: echo ${{ github.event.pull_request.head.ref }}
+
       - name: Break Build for branch 'renovate/major-quarkus*'
         if: contains(github.ref, 'renovate/major-quarkus')
         run: mvn -B install '-Dtest=FailingTest' --file pom.xml
