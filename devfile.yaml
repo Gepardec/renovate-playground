@@ -7,14 +7,26 @@ commands:
       component: tools
       commandLine: 'mvn -X clean install -Dmaven.repo.local=/home/user/.m2/repository > maven_output.log'
       workingDir: ${PROJECT_SOURCE}
-  - id: touch
+  - id: dev-run
     exec:
       component: tools
-      commandLine: 'touch blubb'
+      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0'
+      hotReloadCapable: true
+      group:
+        kind: run
+        isDefault: true
+      workingDir: ${PROJECT_SOURCE}
+  - id: dev-debug
+    exec:
+      component: tools
+      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Ddebug=${DEBUG_PORT}'
+      hotReloadCapable: true
+      group:
+        kind: debug
+        isDefault: true
       workingDir: ${PROJECT_SOURCE}
 events:
   postStart:
-    - touch
     - clean-install
 components:
   - name: tools
@@ -27,6 +39,16 @@ components:
       volumeMounts:
         - name: m2
           path: /home/user/.m2
+      endpoints:
+        - name: https-quarkus
+          targetPort: 8080
+          protocol: https
+        - exposure: none
+          name: debug
+          targetPort: 5858
+      env:
+        - name: DEBUG_PORT
+          value: '5858'
   - name: m2
     volume:
       size: 10G
