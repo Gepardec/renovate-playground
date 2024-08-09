@@ -5,7 +5,7 @@ commands:
   - id: clean-install
     exec:
       component: tools
-      commandLine: 'mvn -X clean install > maven_output.log'
+      commandLine: './mvnw -X clean install > maven_output.log'
       workingDir: ${PROJECT_SOURCE}
   - id: touch
     exec:
@@ -24,6 +24,9 @@ components:
       memoryRequest: 1Gi
       cpuLimit: "2"
       cpuRequest: 200m
+      env:
+        - name: M2_HOME
+          value: /home/user
       volumeMounts:
         - name: m2
           path: /home/user/.m2
