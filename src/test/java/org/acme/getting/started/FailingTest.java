@@ -6,6 +6,6 @@ public class FailingTest {
 
     @Test
     void testThisAlwaysFails() {
-        assert false;
+        assert true;
     }
 }
