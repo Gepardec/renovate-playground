@@ -5,7 +5,7 @@ commands:
   - id: clean-install
     exec:
       component: tools
-      commandLine: 'mvn -X clean install -Dmaven.repo.local=/home/user/.m2/repository > maven_output.log'
+      commandLine: 'mvn clean install -Dmaven.repo.local=/home/user/.m2/repository'
       workingDir: ${PROJECT_SOURCE}
   - id: dev-run
     exec:
