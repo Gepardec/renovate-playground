@@ -5,7 +5,7 @@ commands:
   - id: clean-install
     exec:
       component: tools
-      commandLine: './mvnw clean install > maven_output.log'
+      commandLine: 'mvn -X clean install > maven_output.log'
       workingDir: ${PROJECT_SOURCE}
   - id: touch
     exec:
