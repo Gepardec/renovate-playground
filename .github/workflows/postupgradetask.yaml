@@ -41,10 +41,16 @@ jobs:
           NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          branch: 'postupgradetask/${DEPNAME}_${CURR_VERSION}_${NEW_VERSION}'
+          branch: 'postupgradetask/${{ steps.parse.outputs.DEPNAME }}_${{ steps.parse.outputs.CURR_VERSION }}_${{ steps.parse.outputs.NEW_VERSION }}'
 
       - name: Upgrade
-        run: echo upgrading && touch test.txt
+        run: |
+          ls
+          cd renovate-playground
+          echo "-----"
+          ls
+          echo upgrading
+          touch test.txt
 
       - name: Push to Repository B
         run: |
