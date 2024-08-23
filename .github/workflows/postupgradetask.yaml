@@ -46,12 +46,12 @@ jobs:
       - name: Upgrade
         run: |
           ls
-          cd renovate-playground
-          echo "-----"
-          ls
           echo upgrading
           touch test.txt
+          ls
 
       - name: Push to Repository B
         run: |
+          git add .
+          git commit -m "test"
           git push
