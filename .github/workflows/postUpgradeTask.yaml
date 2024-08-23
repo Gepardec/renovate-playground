@@ -48,15 +48,15 @@ jobs:
           CURR_VERSION: ${{ steps.parse.outputs.CURR_VERSION }}
           NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
         run: |
+          # TODO was wenn der branch schon existiert
           git checkout -B postupgradetask/${DEPNAME}#${CURR_VERSION}#${NEW_VERSION}
           git push --set-upstream origin postupgradetask/${DEPNAME}#${CURR_VERSION}#${NEW_VERSION}
 
       - name: Upgrade
+        env:
+          NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
         run: |
-          ls
-          echo upgrading
-          touch test.txt
-          ls
+          mvnw io.quarkus.platform:quarkus-maven-plugin:${NEW_VERSION}:update
 
       - name: Push
         env:
