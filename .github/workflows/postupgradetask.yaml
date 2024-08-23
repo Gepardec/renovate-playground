@@ -13,8 +13,21 @@ jobs:
         # renovate/maven-wrapper_3.1.1_3.3.2.x
         run: echo ${{ github.ref_name }}
 
-      #- name: Parse branch name
-      #  run: # TODO
+      - name: Parse branch name
+        id: parse
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          echo "DEPNAME=echo $BRANCH | cut -d'/' -f2 | cut -d'_' -f1" >> "$GITHUB_OUTPUT"
+          echo "CURR_VERSION=echo $BRANCH | cut -d'/' -f2 | cut -d'_' -f2" >> "$GITHUB_OUTPUT"
+          echo "NEW_VERSION=echo $BRANCH | cut -d'/' -f2 | cut -d'_' -f3" >> "$GITHUB_OUTPUT"
+
+      - name: echo parsed values
+        env:
+          DEPNAME: ${{ steps.parse.outputs.DEPNAME }}
+          CURR_VERSION: ${{ steps.parse.outputs.CURR_VERSION }}
+          NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
+        run: echo "depname=${DEPNAME}, currVersion=${CURR_VERSION}, newVersion=${NEW_VERSION}"
 
       - uses: actions/checkout@v3
         name: checkout
@@ -28,4 +41,4 @@ jobs:
       #    branch: 'postupgradetask/' # TODO branch name
 
       - name: Upgrade
-        run: echo hello world# TODO echo & touch (parsed depname, oldVersion, newVersion )
+        run: echo upgrading
