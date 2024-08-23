@@ -1,31 +1,71 @@
-name: PostUpgradeTask
+name: PostUpgradeTask Quarkus
 
 on:
   push:
     branches:
-      - 'renovate/**'
+      - 'renovate/quarkus**'
 
 jobs:
   postupgradetask:
     runs-on: ubuntu-latest
     steps:
       - name: Echo github.ref
-        # renovate/maven-wrapper_3.1.1_3.3.2.x
         run: echo ${{ github.ref_name }}
 
-      #- name: Parse branch name
-      #  run: # TODO
+      - name: Parse branch name
+        id: parse
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          echo "DEPNAME=$(echo $BRANCH | cut -d'/' -f2 | cut -d'#' -f1)" >> "$GITHUB_OUTPUT"
+          echo "CURR_VERSION=$(echo $BRANCH | cut -d'/' -f2 | cut -d'#' -f2)" >> "$GITHUB_OUTPUT"
+          echo "NEW_VERSION=$(echo $BRANCH | cut -d'/' -f2 | cut -d'#' -f3)" >> "$GITHUB_OUTPUT"
+
+      - name: echo parsed values
+        env:
+          DEPNAME: ${{ steps.parse.outputs.DEPNAME }}
+          CURR_VERSION: ${{ steps.parse.outputs.CURR_VERSION }}
+          NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
+        run: echo "depname=${DEPNAME}, currVersion=${CURR_VERSION}, newVersion=${NEW_VERSION}"
 
       - uses: actions/checkout@v3
         name: checkout
         with:
           ref: main
 
-      #- uses: peterjgrainger/action-create-branch@v2.2.0
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #  with:
-      #    branch: 'postupgradetask/' # TODO branch name
+      # - uses: peterjgrainger/action-create-branch@v2.2.0
+      #   env:
+      #     DEPNAME: ${{ steps.parse.outputs.DEPNAME }}
+      #     CURR_VERSION: ${{ steps.parse.outputs.CURR_VERSION }}
+      #     NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     branch: 'postupgradetask/${{ steps.parse.outputs.DEPNAME }}_${{ steps.parse.outputs.CURR_VERSION }}_${{ steps.parse.outputs.NEW_VERSION }}'
+
+      - name: Create branch
+        env:
+          DEPNAME: ${{ steps.parse.outputs.DEPNAME }}
+          CURR_VERSION: ${{ steps.parse.outputs.CURR_VERSION }}
+          NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
+        run: |
+          git checkout -B postupgradetask/${DEPNAME}#${CURR_VERSION}#${NEW_VERSION}
+          git push --set-upstream origin postupgradetask/${DEPNAME}#${CURR_VERSION}#${NEW_VERSION}
 
       - name: Upgrade
-        run: echo hello world# TODO echo & touch (parsed depname, oldVersion, newVersion )
+        run: |
+          ls
+          echo upgrading
+          touch test.txt
+          ls
+
+      - name: Push
+        env:
+          DEPNAME: ${{ steps.parse.outputs.DEPNAME }}
+          CURR_VERSION: ${{ steps.parse.outputs.CURR_VERSION }}
+          NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
+        run: |
+          git config --global user.email "postupgrade@anewhope.com"
+          git config --global user.name "PostUpgradeTaskQuarkus"
+          git add .
+          git commit -m "updated ${DEPNAME} version from ${CURR_VERSION} to ${NEW_VERSION}"
+          git push
