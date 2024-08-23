@@ -52,6 +52,8 @@ jobs:
 
       - name: Push to Repository B
         run: |
+          git config --global user.email "postupgrade@anewhope.com"
+          git config --global user.name "PostUpgradeTask"
           git add .
           git commit -m "test"
           git push
