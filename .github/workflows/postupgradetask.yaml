@@ -18,9 +18,9 @@ jobs:
         env:
           BRANCH: ${{ github.ref_name }}
         run: |
-          echo "DEPNAME=echo $BRANCH | cut -d'/' -f2 | cut -d'_' -f1" >> "$GITHUB_OUTPUT"
-          echo "CURR_VERSION=echo $BRANCH | cut -d'/' -f2 | cut -d'_' -f2" >> "$GITHUB_OUTPUT"
-          echo "NEW_VERSION=echo $BRANCH | cut -d'/' -f2 | cut -d'_' -f3" >> "$GITHUB_OUTPUT"
+          echo "DEPNAME=$(echo $BRANCH | cut -d'/' -f2 | cut -d'_' -f1)" >> "$GITHUB_OUTPUT"
+          echo "CURR_VERSION=$(echo $BRANCH | cut -d'/' -f2 | cut -d'_' -f2)" >> "$GITHUB_OUTPUT"
+          echo "NEW_VERSION=(echo $BRANCH | cut -d'/' -f2 | cut -d'_' -f3)" >> "$GITHUB_OUTPUT"
 
       - name: echo parsed values
         env:
