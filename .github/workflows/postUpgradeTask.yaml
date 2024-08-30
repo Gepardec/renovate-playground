@@ -49,6 +49,8 @@ jobs:
           NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
         run: |
           ls -al
+          ./mvnw -v
+          java --version
           ./mvnw io.quarkus.platform:quarkus-maven-plugin:${NEW_VERSION}:update
 
       - name: Push
