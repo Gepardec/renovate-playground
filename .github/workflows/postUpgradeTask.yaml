@@ -34,19 +34,9 @@ jobs:
         with:
           ref: main
 
-      # - name: Create branch
-      #   env:
-      #     DEPNAME: ${{ steps.parse.outputs.DEPNAME }}
-      #     CURR_VERSION: ${{ steps.parse.outputs.CURR_VERSION }}
-      #     NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
-      #   run: |
-      #     # TODO was wenn der branch schon existiert
-      #     git checkout -B postupgradetask/${DEPNAME}#${CURR_VERSION}#${NEW_VERSION}
-      #     git push --set-upstream origin postupgradetask/${DEPNAME}#${CURR_VERSION}#${NEW_VERSION}
-
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
+          distribution: 'temurin'
           java-version: '21'
 
       - name: Upgrade
@@ -58,21 +48,18 @@ jobs:
           java --version
           ./mvnw io.quarkus.platform:quarkus-maven-plugin:${NEW_VERSION}:update
 
-      # - name: Push
-      #   env:
-      #     DEPNAME: ${{ steps.parse.outputs.DEPNAME }}
-      #     CURR_VERSION: ${{ steps.parse.outputs.CURR_VERSION }}
-      #     NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
-      #   run: |
-      #     git config --global user.email "postupgrade@anewhope.com"
-      #     git config --global user.name "PostUpgradeTaskQuarkus"
-      #     git add .
-      #     git commit -m "updated ${DEPNAME} version from ${CURR_VERSION} to ${NEW_VERSION}"
-      #     git push
-
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
           title: Upgrade quarkus from ${{ steps.parse.outputs.CURR_VERSION }} to ${{ steps.parse.outputs.NEW_VERSION }}
           branch: postupgradetask/${{ steps.parse.outputs.DEPNAME }}#${{ steps.parse.outputs.CURR_VERSION }}#${{ steps.parse.outputs.NEW_VERSION }}
           base: main
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          # body: |
+          #   Update report
+          # assignees: peter-evans
+          # reviewers: peter-evans
+          # team-reviewers: |
+            # developers
+            # qa-team
