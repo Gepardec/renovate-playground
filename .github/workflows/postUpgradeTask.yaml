@@ -69,3 +69,13 @@ jobs:
           git add .
           git commit -m "updated ${DEPNAME} version from ${CURR_VERSION} to ${NEW_VERSION}"
           git push
+
+      - name: Create Pull Request
+        env:
+          DEPNAME: ${{ steps.parse.outputs.DEPNAME }}
+          CURR_VERSION: ${{ steps.parse.outputs.CURR_VERSION }}
+          NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: Upgrade quarkus from ${CURR_VERSION} to ${NEW_VERSION}
+          branch: postupgradetask/${DEPNAME}#${CURR_VERSION}#${NEW_VERSION}
