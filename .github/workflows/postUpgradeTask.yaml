@@ -44,6 +44,11 @@ jobs:
           git checkout -B postupgradetask/${DEPNAME}#${CURR_VERSION}#${NEW_VERSION}
           git push --set-upstream origin postupgradetask/${DEPNAME}#${CURR_VERSION}#${NEW_VERSION}
 
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '21'
+
       - name: Upgrade
         env:
           NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
