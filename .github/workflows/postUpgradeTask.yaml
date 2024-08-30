@@ -56,8 +56,8 @@ jobs:
           base: main
           committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
-          # body: |
-          #   Update report
+          body: |
+            Upgrade quarkus version
           # assignees: peter-evans
           # reviewers: peter-evans
           # team-reviewers: |
