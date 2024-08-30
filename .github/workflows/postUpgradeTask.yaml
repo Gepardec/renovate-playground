@@ -75,3 +75,4 @@ jobs:
         with:
           title: Upgrade quarkus from ${{ steps.parse.outputs.CURR_VERSION }} to ${{ steps.parse.outputs.NEW_VERSION }}
           branch: postupgradetask/${{ steps.parse.outputs.DEPNAME }}#${{ steps.parse.outputs.CURR_VERSION }}#${{ steps.parse.outputs.NEW_VERSION }}
+          base: main
