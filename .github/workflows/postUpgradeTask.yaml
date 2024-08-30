@@ -34,15 +34,6 @@ jobs:
         with:
           ref: main
 
-      # - uses: peterjgrainger/action-create-branch@v2.2.0
-      #   env:
-      #     DEPNAME: ${{ steps.parse.outputs.DEPNAME }}
-      #     CURR_VERSION: ${{ steps.parse.outputs.CURR_VERSION }}
-      #     NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     branch: 'postupgradetask/${{ steps.parse.outputs.DEPNAME }}_${{ steps.parse.outputs.CURR_VERSION }}_${{ steps.parse.outputs.NEW_VERSION }}'
-
       - name: Create branch
         env:
           DEPNAME: ${{ steps.parse.outputs.DEPNAME }}
@@ -57,7 +48,8 @@ jobs:
         env:
           NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
         run: |
-          mvnw io.quarkus.platform:quarkus-maven-plugin:${NEW_VERSION}:update
+          ls -al
+          ./mvnw io.quarkus.platform:quarkus-maven-plugin:${NEW_VERSION}:update
 
       - name: Push
         env:
