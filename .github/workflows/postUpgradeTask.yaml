@@ -3,7 +3,7 @@ name: PostUpgradeTask Quarkus
 on:
   push:
     branches:
-      - 'renovate/quarkus**'
+      - 'renovate/**quarkus**'
 
 jobs:
   postupgradetask:
