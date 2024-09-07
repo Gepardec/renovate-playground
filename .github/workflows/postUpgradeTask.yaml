@@ -26,7 +26,7 @@ jobs:
         run: |
           ls -la
           pwd
-          source renovate-branch/update-info.txt
+          cat renovate-branch/update-info.txt
           rm -rf renovate-branch
 
       - name: echo parsed values
