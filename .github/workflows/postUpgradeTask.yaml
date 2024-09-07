@@ -1,6 +1,7 @@
 name: PostUpgradeTask Quarkus
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'renovate/**quarkus**'
@@ -12,12 +13,19 @@ jobs:
       - name: Echo github.ref
         run: echo ${{ github.ref_name }}
 
+      - uses: actions/checkout@v3
+        name: checkout renovate branch
+        with:
+          ref: ${{ github.ref_name }}
+          path: "renovate-branch"
+
       - name: Parse branch name
         id: parse
         env:
           BRANCH: ${{ github.ref_name }}
         run: |
-          source update-info.txt
+          cat renovate-branch/update-info.txt >> $GITHUB_OUTPUT
+          rm -rf renovate-branch
 
       - name: echo parsed values
         env:
