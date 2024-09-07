@@ -17,9 +17,7 @@ jobs:
         env:
           BRANCH: ${{ github.ref_name }}
         run: |
-          echo "DEPNAME=$(echo $BRANCH | cut -d'/' -f2 | cut -d'#' -f1)" >> "$GITHUB_OUTPUT"
-          echo "CURR_VERSION=$(echo $BRANCH | cut -d'/' -f2 | cut -d'#' -f2)" >> "$GITHUB_OUTPUT"
-          echo "NEW_VERSION=$(echo $BRANCH | cut -d'/' -f2 | cut -d'#' -f3)" >> "$GITHUB_OUTPUT"
+          source update-info.txt
 
       - name: echo parsed values
         env:
@@ -28,7 +26,6 @@ jobs:
           NEW_VERSION: ${{ steps.parse.outputs.NEW_VERSION }}
         run: echo "depname=${DEPNAME}, currVersion=${CURR_VERSION}, newVersion=${NEW_VERSION}"
 
-      # TODO new branch from main? or from original renovate branch?
       - uses: actions/checkout@v3
         name: checkout
         with:
@@ -58,10 +55,3 @@ jobs:
           author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           body: |
             Upgrade quarkus version
-          # assignees: peter-evans
-          # reviewers: peter-evans
-          # team-reviewers: |
-            # developers
-            # qa-team
-
-    # TODO Link to devspace?  
