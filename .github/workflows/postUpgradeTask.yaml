@@ -1,6 +1,7 @@
 name: PostUpgradeTask Quarkus
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'renovate/**quarkus**'
@@ -17,6 +18,8 @@ jobs:
         env:
           BRANCH: ${{ github.ref_name }}
         run: |
+          ls -la
+          pwd
           source update-info.txt
 
       - name: echo parsed values
