@@ -13,6 +13,12 @@ jobs:
       - name: Echo github.ref
         run: echo ${{ github.ref_name }}
 
+      - uses: actions/checkout@v3
+        name: checkout renovate branch
+        with:
+          ref: ${{ github.ref_name }}
+          path: "renovate-branch"
+
       - name: Parse branch name
         id: parse
         env:
@@ -20,7 +26,8 @@ jobs:
         run: |
           ls -la
           pwd
-          source update-info.txt
+          source renovate-branch/update-info.txt
+          rm -rf renovate-branch
 
       - name: echo parsed values
         env:
