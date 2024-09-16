@@ -5,13 +5,14 @@ on:
   pull_request_target:
     types: [ opened ]
     branches:
-      - 'renovate/quarkus**'
+      - 'main'
 
 jobs:
   postupgradetask:
+    if: ${{ ! startsWith(github.ref_name, 'renovate/quarkus') }}
     runs-on: ubuntu-latest
     steps:
-      - name: Echo github.ref
+      - name: Echo github.ref_name
         run: echo ${{ github.ref_name }}
 
       - name: Parse branch name
