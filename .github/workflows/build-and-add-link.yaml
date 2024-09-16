@@ -9,13 +9,6 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: maven
-
       - name: Echo github.ref
         run: echo ${{ github.event.pull_request.head.ref }}
 
@@ -23,6 +16,13 @@ jobs:
         name: checkout
         with:
           ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
 
       - name: Break Build for branch 'postupgradetask/quarkus*'
         if: contains(github.event.pull_request.head.ref, 'postupgradetask/quarkus')
