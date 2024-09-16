@@ -23,7 +23,7 @@ jobs:
         name: checkout
         ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Break Build for branch 'renovate/major-quarkus*'
+      - name: Break Build for branch 'postupgradetask/quarkus*'
         if: contains(github.event.pull_request.head.ref, 'postupgradetask/quarkus')
         run: mvn -B test -Dtest=FailingTest --file pom.xml
 
