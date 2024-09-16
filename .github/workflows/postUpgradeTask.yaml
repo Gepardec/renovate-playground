@@ -9,16 +9,16 @@ on:
 
 jobs:
   postupgradetask:
-    if: ${{ ! startsWith(github.ref_name, 'renovate/quarkus') }}
+    if: ${{ ! startsWith(github.head_ref, 'renovate/quarkus') }}
     runs-on: ubuntu-latest
     steps:
-      - name: Echo github.ref_name
-        run: echo ${{ github.ref_name }}
+      - name: Echo github.head_ref
+        run: echo ${{ github.head_ref }}
 
       - name: Parse branch name
         id: parse
         env:
-          BRANCH: ${{ github.ref_name }}
+          BRANCH: ${{ github.head_ref }}
         run: |
           echo "DEPNAME=$(echo $BRANCH | cut -d'/' -f2 | cut -d'_' -f1)" >> "$GITHUB_OUTPUT"
           echo "CURR_VERSION=$(echo $BRANCH | cut -d'/' -f2 | cut -d'_' -f2)" >> "$GITHUB_OUTPUT"
