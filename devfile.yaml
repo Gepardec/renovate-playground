@@ -1,6 +1,9 @@
 schemaVersion: 2.2.0
 metadata:
   name: renovate-playground-devfile
+events:
+  postStart:
+    - clean-install
 commands:
   - id: clean-install
     exec:
@@ -25,9 +28,6 @@ commands:
         kind: debug
         isDefault: true
       workingDir: ${PROJECT_SOURCE}
-events:
-  postStart:
-    - clean-install
 components:
   - name: tools
     container:
